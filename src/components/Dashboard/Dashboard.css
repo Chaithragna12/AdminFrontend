@@ -1,0 +1,32 @@
+.dashboard {
+  display: flex;
+
+}
+
+.sidebar {
+  width: 200px;
+  color: white;
+  height: 100vh;
+  border: 1px solid black;
+  padding: 20px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+  color: white;
+  text-decoration: none;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;  
+  
+}

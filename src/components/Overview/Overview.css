@@ -1,0 +1,179 @@
+/* Overview Container */
+.overview-container {
+  padding: 10px;
+  max-width: 1200px;
+  margin: auto;
+  text-align: center;
+}
+
+/* Title Styling with 3D Shadow */
+.overview-title {
+  font-size: 50px;
+  color: #ed7b0a;
+  margin-bottom: 5px;
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+  transform: perspective(500px) rotateX(5deg);
+}
+
+/* Underline Effect with a Small Circle */
+.overview-title::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 100%;
+  height: 5px;
+  background-color: #100e0e;
+}
+
+.overview-title::before {
+  content: "";
+  position: absolute;
+  right: -15px;
+  bottom: -8px;
+  width: 10px;
+  height: 10px;
+  background-color: black;
+  border-radius: 50%;
+}
+
+/* Overview Stats Container */
+.overview-stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 50px;
+  margin-top: 30px;
+}
+
+/* Stat Cards with 3D Depth */
+.stat-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2), -5px -5px 10px rgba(255, 255, 255, 0.6);
+  text-align: center;
+  min-width: 280px;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  border: 1px solid rgb(198, 29, 29);
+  transform: perspective(1000px) rotateX(5deg);
+}
+
+/* Hover effect for 3D lift */
+.stat-card:hover {
+  transform: perspective(1000px) rotateX(0deg) translateY(-5px);
+  box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.3), -8px -8px 15px rgba(255, 255, 255, 0.5);
+  color: rgb(241, 33, 33);
+}
+
+/* Title */
+.title {
+  font-size: 20px;
+  margin-top: 50px;
+}
+
+/* Button Container */
+.overview-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+/* 3D Button Styling */
+.overview-button {
+  padding: 12px 24px;
+  background-color: #f79839;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+  transform: perspective(500px) rotateX(5deg);
+}
+
+/* Hover effect */
+.overview-button:hover {
+  background-color: #f56400;
+  transform: perspective(500px) rotateX(0deg) translateY(-3px);
+  box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Active state for button */
+.overview-button:active {
+  background-color: #e85800;
+  transform: perspective(500px) rotateX(0deg) translateY(1px);
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* ---------------------------- */
+/* RESPONSIVE DESIGN */
+/* ---------------------------- */
+
+/* Tablets */
+@media (max-width: 1024px) {
+  .overview-title {
+    font-size: 40px;
+  }
+
+  .overview-stats {
+    gap: 40px;
+  }
+
+  .stat-card {
+    min-width: 250px;
+  }
+
+  .overview-button {
+    font-size: 14px;
+    padding: 10px 20px;
+  }
+}
+
+/* Mobile Screens */
+@media (max-width: 768px) {
+  .overview-title {
+    font-size: 35px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  .overview-title::after,
+  .overview-title::before {
+    display: none; /* Hide underline effect on small screens */
+  }
+
+  .overview-stats {
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .stat-card {
+    width: 90%;
+  }
+
+  .overview-button {
+    font-size: 14px;
+    padding: 10px 18px;
+  }
+}
+
+/* Small Mobile Screens */
+@media (max-width: 480px) {
+  .overview-title {
+    font-size: 30px;
+  }
+
+  .stat-card {
+    width: 100%;
+  }
+
+  .overview-button {
+    font-size: 12px;
+    padding: 8px 15px;
+  }
+}

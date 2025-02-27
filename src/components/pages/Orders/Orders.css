@@ -1,0 +1,202 @@
+.orders-container {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow-x: auto; /* Enables horizontal scrolling on small screens */
+  width: 100%;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #f3a744;
+}
+
+/* Filters Section */
+.filters {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  gap: 10px;
+  flex-wrap: wrap; /* Ensures wrapping on smaller screens */
+}
+
+.filters input,
+.filters select {
+  padding: 10px;
+  flex: 1; /* Makes input and select responsive */
+  font-size: 14px;
+  border: 1px solid #100e0e;
+  border-radius: 5px;
+  outline: none;
+  min-width: 150px;
+}
+
+.filters input:focus,
+.filters select:focus {
+  border-color: #007bff;
+}
+
+/* Orders Table */
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  min-width: 800px; /* Ensures table does not shrink */
+}
+
+.orders-table th,
+.orders-table td {
+  padding: 12px;
+  border: 1px solid #f4c671;
+  text-align: center;
+  white-space: nowrap; /* Prevents text wrapping */
+}
+
+.orders-table th {
+  background: #d99047;
+  color: white;
+}
+
+.orders-table tbody tr:nth-child(even) {
+  background: #f9f9f9;
+}
+
+/* Select Dropdowns */
+.orders-table select {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Buttons */
+.delete-btn {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px 12px; /* Increased padding */
+  cursor: pointer;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+.delete-btn:hover {
+  background: #c82333;
+}
+
+.view-btn {
+  background: #17a2b8;
+  color: white;
+  border: none;
+  padding: 8px 12px; /* Increased padding */
+  cursor: pointer;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+.view-btn:hover {
+  background: #138496;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .orders-container {
+    padding: 15px;
+  }
+
+  .filters {
+    flex-wrap: wrap;
+  }
+  
+  .orders-table {
+    min-width: 700px; /* Adjusted for medium screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .filters {
+    flex-direction: column;
+  }
+
+  .filters input,
+  .filters select {
+    width: 100%;
+  }
+
+  .orders-container {
+    overflow-x: auto; /* Enables horizontal scrolling */
+    padding: 10px;
+  }
+
+  .orders-table th,
+  .orders-table td {
+    font-size: 12px;
+    padding: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .orders-container {
+    padding: 8px;
+  }
+
+  .orders-table {
+    min-width: 600px; /* Adjusted for small screens */
+  }
+
+  .delete-btn,
+  .view-btn {
+    padding:4px 4px; /* Smaller buttons */
+    font-size: 9px;
+    border-radius: 4px;
+    width: auto; /* Adjusts width based on content */
+    min-width: 50px; /* Ensures a smaller minimum width */
+    max-width: 80px; /* Prevents it from being too long */
+  }
+  
+}
+@media (max-width: 768px) {
+  .orders-table {
+
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  thead {
+    display: none; /* Hide table headers on small screens */
+  }
+
+  tbody, tr {
+    display: block;
+    width: 100%;
+  }
+
+  tr {
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+  }
+
+  td {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    position: relative;
+  }
+
+  td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    color: #333;
+    text-transform: uppercase;
+  }
+}
