@@ -14,7 +14,7 @@ const ChangePassword = () => {
 
   const sendOTP = async () => {
     try {
-      await axios.post("http://localhost:3000/api/admin/change-password", {
+      await axios.post("https://akshaya-admin-be.onrender.com/api/admin/change-password", {
         email,
         action: "send-otp",
       });
@@ -27,7 +27,7 @@ const ChangePassword = () => {
 
   const verifyOTP = async () => {
     try {
-      await axios.post("http://localhost:3000/api/admin/change-password", {
+      await axios.post("https://akshaya-admin-be.onrender.com/api/admin/change-password", {
         email,
         otp,
         action: "verify-otp",
@@ -41,7 +41,7 @@ const ChangePassword = () => {
 
   const changePassword = async () => {
     try {
-      await axios.post("http://localhost:3000/api/admin/change-password", {
+      await axios.post("https://akshaya-admin-be.onrender.com/api/admin/change-password", {
         email,
         newPassword,
         action: "change-password",

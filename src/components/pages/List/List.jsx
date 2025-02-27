@@ -15,7 +15,7 @@ const List = () => {
   // Fetch products from backend
   useEffect(() => {
     axios
-      .get("http://localhost:3000/api/products/all")
+      .get("https://akshaya-admin-be.onrender.com/api/products/all")
       .then((response) => {
         console.log("Fetched Products:", response.data);
         setProducts(response.data);
@@ -26,7 +26,7 @@ const List = () => {
   // Fetch categories for the dropdown in update form
   useEffect(() => {
     axios
-      .get("http://localhost:3000/api/categories/categories")
+      .get("https://akshaya-admin-be.onrender.com/api/categories/categories")
       .then((response) => {
         console.log("Fetched Categories:", response.data);
         setCategories(response.data);
@@ -59,7 +59,7 @@ const List = () => {
     try {
       console.log("Updating product with data:", editData);
       const response = await axios.put(
-        `http://localhost:3000/api/products/edit/${editingProduct}`,
+        `https://akshaya-admin-be.onrender.com/api/products/edit/${editingProduct}`,
         editData,
         { headers: { "Content-Type": "application/json" } }
       );
@@ -84,7 +84,7 @@ const List = () => {
   // Handle Delete (unchanged)
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/api/products/delete/${id}`);
+      await axios.delete(`https://akshaya-admin-be.onrender.com/api/products/delete/${id}`);
       setProducts((prevProducts) => prevProducts.filter((p) => p._id !== id));
     } catch (error) {
       console.error("Error deleting product:", error);

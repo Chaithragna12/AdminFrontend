@@ -10,14 +10,14 @@ const Orders = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/api/admin/orders/orders")
+      .get("https://akshaya-admin-be.onrender.com/api/admin/orders/orders")
       .then((res) => setOrders(res.data))
       .catch((err) => console.error("Error fetching orders:", err));
   }, []);
 
   const updateOrderStatus = async (id, status) => {
     try {
-      await axios.put(`http://localhost:3000/api/admin/orders/orders/${id}/status`, { orderStatus: status });
+      await axios.put(`https://akshaya-admin-be.onrender.com/api/admin/orders/orders/${id}/status`, { orderStatus: status });
       setOrders((prevOrders) =>
         prevOrders.map((order) =>
           order._id === id ? { ...order, orderStatus: status } : order
@@ -30,7 +30,7 @@ const Orders = () => {
 
   const updatePaymentStatus = async (id, status) => {
     try {
-      await axios.put(`http://localhost:3000/api/admin/orders/orders/${id}/payment`, { paymentStatus: status });
+      await axios.put(`https://akshaya-admin-be.onrender.com/api/admin/orders/orders/${id}/payment`, { paymentStatus: status });
       setOrders((prevOrders) =>
         prevOrders.map((order) =>
           order._id === id ? { ...order, paymentStatus: status } : order
@@ -44,7 +44,7 @@ const Orders = () => {
   const deleteOrder = async (id) => {
     if (window.confirm("Are you sure you want to delete this order?")) {
       try {
-        await axios.delete(`http://localhost:3000/api/admin/orders/delete/${id}`);
+        await axios.delete(`https://akshaya-admin-be.onrender.com/api/admin/orders/delete/${id}`);
         setOrders((prevOrders) => prevOrders.filter((order) => order._id !== id));
       } catch (error) {
         console.error("Error deleting order:", error);

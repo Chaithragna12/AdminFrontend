@@ -10,13 +10,13 @@ const Overview = () => {
   // Function to fetch data from the backend
   const fetchData = async () => {
     try {
-      const itemsResponse = await axios.get("http://localhost:3000/api/items/total-items");
+      const itemsResponse = await axios.get("https://akshaya-admin-be.onrender.com/api/items/total-items");
       setTotalItems(itemsResponse.data.totalItems);
 
-      const ordersResponse = await axios.get("http://localhost:3000/api/stats/total-orders");
+      const ordersResponse = await axios.get("https://akshaya-admin-be.onrender.com/api/stats/total-orders");
       setOrders(ordersResponse.data.totalOrders);
 
-      const usersResponse = await axios.get("http://localhost:3000/api/stats/active-users");
+      const usersResponse = await axios.get("https://akshaya-admin-be.onrender.com/api/stats/active-users");
       setActiveUsers(usersResponse.data.activeUsers);
     } catch (error) {
       console.error("Error fetching data:", error);

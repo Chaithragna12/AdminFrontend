@@ -16,7 +16,7 @@ const Add = ({ onProductAdded }) => {
   // Fetch categories from backend
   useEffect(() => {
     axios
-      .get("http://localhost:3000/api/categories/categories")
+      .get("https://akshaya-admin-be.onrender.com/api/categories/categories")
       .then((response) => {
         console.log("Fetched Categories:", response.data);
         setCategories(response.data);
@@ -59,7 +59,7 @@ const Add = ({ onProductAdded }) => {
       console.log("Submitting product:", productToSend);
 
       const response = await axios.post(
-        "http://localhost:3000/api/products/add",
+        "https://akshaya-admin-be.onrender.com/api/products/add",
         productToSend,
         {
           headers: { "Content-Type": "application/json" },
