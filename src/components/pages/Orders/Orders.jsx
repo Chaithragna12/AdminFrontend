@@ -9,7 +9,7 @@ const Orders = () => {
   const [statusFilter, setStatusFilter] = useState("");
   const fetchOrders = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/admin/orders/all");
+      const response = await axios.get("https://userbackend-385g.onrender.com/api/admin/orders/all");
       console.log("✅ API Response:", response.data); // Debugging
       setOrders(response.data); // ✅ FIXED: Use response.data directly
     } catch (error) {

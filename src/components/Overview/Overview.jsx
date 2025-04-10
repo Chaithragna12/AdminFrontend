@@ -13,7 +13,7 @@ const Overview = () => {
       const itemsResponse = await axios.get("https://adminbackend-dg8o.onrender.com/api/items/total-items");
       setTotalItems(itemsResponse.data.totalItems);
 
-      const ordersResponse = await axios.get("http://localhost:5000/api/admin/orders/count");
+      const ordersResponse = await axios.get("https://userbackend-385g.onrender.com/api/admin/orders/count");
       setOrders(ordersResponse.data.totalOrders);
 
       const usersResponse = await axios.get("https://adminbackend-dg8o.onrender.com/api/stats/active-users");
