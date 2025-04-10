@@ -9,7 +9,7 @@ const Sidebar = () => {
       <div className="sidebar-options">
         <NavLink 
           to="/dashboard" 
-          end  // Add this to fix the issue
+          end  
           className={({ isActive }) => (isActive ? "sidebar-option active" : "sidebar-option")}
         >
           <img src={assets.dashboard_icon} alt="overview" className="alt" />

@@ -13,8 +13,12 @@ const ChangePassword = () => {
   const navigate = useNavigate();
 
   const sendOTP = async () => {
+    if (!email) {
+      toast.error("Please enter a valid email.");
+      return;
+    }
     try {
-      await axios.post("https://akshaya-admin-be.onrender.com/api/admin/change-password", {
+      await axios.post("https://adminbackend-dg8o.onrender.com/api/admin/change-password", {
         email,
         action: "send-otp",
       });
@@ -26,8 +30,12 @@ const ChangePassword = () => {
   };
 
   const verifyOTP = async () => {
+    if (!otp) {
+      toast.error("Please enter the OTP.");
+      return;
+    }
     try {
-      await axios.post("https://akshaya-admin-be.onrender.com/api/admin/change-password", {
+      await axios.post("https://adminbackend-dg8o.onrender.com/api/admin/change-password", {
         email,
         otp,
         action: "verify-otp",
@@ -40,15 +48,19 @@ const ChangePassword = () => {
   };
 
   const changePassword = async () => {
+    if (!newPassword || newPassword.length < 6) {
+      toast.error("Password must be at least 6 characters long.");
+      return;
+    }
     try {
-      await axios.post("https://akshaya-admin-be.onrender.com/api/admin/change-password", {
+      await axios.post("https://adminbackend-dg8o.onrender.com/api/admin/change-password", {
         email,
         newPassword,
         action: "change-password",
       });
       toast.success("Password changed successfully!");
       setTimeout(() => {
-        navigate("/dashboard"); // Redirect to dashboard instead of login
+        navigate("/dashboard"); // Redirect to dashboard after success
       }, 2000);
     } catch (error) {
       toast.error("Error changing password. Try again.");
@@ -59,17 +71,19 @@ const ChangePassword = () => {
     <div className="change-password-container">
       <h2>Change Password</h2>
       <ToastContainer position="top-right" autoClose={3000} />
+      
       {step === 1 && (
         <>
           <input
             type="email"
-            placeholder="Enter Email"
+            placeholder="Enter your email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <button onClick={sendOTP}>Send OTP</button>
         </>
       )}
+
       {step === 2 && (
         <>
           <input
@@ -81,6 +95,7 @@ const ChangePassword = () => {
           <button onClick={verifyOTP}>Verify OTP</button>
         </>
       )}
+
       {step === 3 && (
         <>
           <input

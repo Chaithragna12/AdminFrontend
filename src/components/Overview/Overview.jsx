@@ -10,14 +10,16 @@ const Overview = () => {
   // Function to fetch data from the backend
   const fetchData = async () => {
     try {
-      const itemsResponse = await axios.get("https://akshaya-admin-be.onrender.com/api/items/total-items");
+      const itemsResponse = await axios.get("https://adminbackend-dg8o.onrender.com/api/items/total-items");
       setTotalItems(itemsResponse.data.totalItems);
 
-      const ordersResponse = await axios.get("https://akshaya-admin-be.onrender.com/api/stats/total-orders");
+      const ordersResponse = await axios.get("http://localhost:5000/api/admin/orders/count");
       setOrders(ordersResponse.data.totalOrders);
 
-      const usersResponse = await axios.get("https://akshaya-admin-be.onrender.com/api/stats/active-users");
-      setActiveUsers(usersResponse.data.activeUsers);
+      const usersResponse = await axios.get("https://adminbackend-dg8o.onrender.com/api/stats/active-users");
+
+      setActiveUsers(0); 
+      setActiveUsers(usersResponse.data.activeUsers || 0);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -26,9 +28,7 @@ const Overview = () => {
   // useEffect to fetch data initially and then every 10 seconds
   useEffect(() => {
     fetchData(); // Initial fetch
-
     const interval = setInterval(fetchData, 10000); // Refresh data every 10 seconds
-
     return () => clearInterval(interval); // Cleanup interval on unmount
   }, []);
 

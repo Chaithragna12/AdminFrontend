@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Orders.css";
 
@@ -6,71 +7,70 @@ const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
-  const [paymentFilter, setPaymentFilter] = useState("");
+  const fetchOrders = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/api/admin/orders/all");
+      console.log("✅ API Response:", response.data); // Debugging
+      setOrders(response.data); // ✅ FIXED: Use response.data directly
+    } catch (error) {
+      console.error("❌ Error fetching orders:", error.response?.data || error.message);
+    }
+  };
+  
 
   useEffect(() => {
-    axios
-      .get("https://akshaya-admin-be.onrender.com/api/admin/orders/orders")
-      .then((res) => setOrders(res.data))
-      .catch((err) => console.error("Error fetching orders:", err));
+    console.log("🔍 Orders Data:", orders);
+    fetchOrders();
   }, []);
 
-  const updateOrderStatus = async (id, status) => {
+  // ✅ Update Order Status Function
+  const updateOrderStatus = async (orderId, newStatus) => {
     try {
-      await axios.put(`https://akshaya-admin-be.onrender.com/api/admin/orders/orders/${id}/status`, { orderStatus: status });
-      setOrders((prevOrders) =>
-        prevOrders.map((order) =>
-          order._id === id ? { ...order, orderStatus: status } : order
-        )
+      console.log("🔄 Updating order:", orderId, "New status:", newStatus);
+      await axios.put(
+        `https://adminbackend-dg8o.onrender.com/api/admin/orders/${orderId}/status`, // ✅ Fixed port
+        { status: newStatus },
+        { headers: { "Content-Type": "application/json" } }
       );
+      console.log("✅ Order updated successfully");
+      fetchOrders();
     } catch (error) {
-      console.error("Error updating order status:", error);
+      console.error("❌ Error updating order status:", error.response?.data || error.message);
     }
   };
 
-  const updatePaymentStatus = async (id, status) => {
-    try {
-      await axios.put(`https://akshaya-admin-be.onrender.com/api/admin/orders/orders/${id}/payment`, { paymentStatus: status });
-      setOrders((prevOrders) =>
-        prevOrders.map((order) =>
-          order._id === id ? { ...order, paymentStatus: status } : order
-        )
-      );
-    } catch (error) {
-      console.error("Error updating payment status:", error);
-    }
-  };
-
+  // ✅ Delete Order Function
   const deleteOrder = async (id) => {
     if (window.confirm("Are you sure you want to delete this order?")) {
       try {
-        await axios.delete(`https://akshaya-admin-be.onrender.com/api/admin/orders/delete/${id}`);
+        await axios.delete(`https://adminbackend-dg8o.onrender.com/api/admin/orders/${id}`);
         setOrders((prevOrders) => prevOrders.filter((order) => order._id !== id));
+        console.log("✅ Order deleted successfully!");
       } catch (error) {
-        console.error("Error deleting order:", error);
+        console.error("❌ Error deleting order:", error.response?.data || error.message);
       }
     }
   };
 
+  // ✅ Filter Orders
   const filteredOrders = orders.filter((order) => {
     const matchesSearch =
       order._id.includes(searchTerm) ||
-      (order.userId?.email && order.userId.email.toLowerCase().includes(searchTerm.toLowerCase())) ||
-      (order.userId?.name && order.userId.name.toLowerCase().includes(searchTerm.toLowerCase()));
+      (order.userId?.email && order.userId.email.toLowerCase().includes(searchTerm.toLowerCase()));
 
     const matchesStatus = statusFilter ? order.orderStatus === statusFilter : true;
-    const matchesPayment = paymentFilter ? order.paymentStatus === paymentFilter : true;
-
-    return matchesSearch && matchesStatus && matchesPayment;
+    return matchesSearch && matchesStatus;
   });
 
   return (
     <div className="orders-container">
       <h2>Orders Management</h2>
+      
+      {/* 🔎 Search & Filter */}
       <div className="filters">
         <input
           type="text"
-          placeholder="Search by Order ID or Customer Name"
+          placeholder="Search by Order ID or Customer Email"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
@@ -79,24 +79,18 @@ const Orders = () => {
           <option value="Pending">Pending</option>
           <option value="Shipped">Shipped</option>
           <option value="Delivered">Delivered</option>
+          <option value="Processing">Processing</option>
           <option value="Cancelled">Cancelled</option>
-        </select>
-        <select value={paymentFilter} onChange={(e) => setPaymentFilter(e.target.value)}>
-          <option value="">All Payments</option>
-          <option value="Pending">Pending</option>
-          <option value="Paid">Paid</option>
-          <option value="Failed">Failed</option>
-          <option value="Refunded">Refunded</option>
         </select>
       </div>
 
+      {/* 🛒 Orders Table */}
       <table className="orders-table">
         <thead>
           <tr>
             <th>Order ID</th>
-            <th>User Name & Email</th>
+            <th>User Email</th>
             <th>Order Status</th>
-            <th>Payment Status</th>
             <th>Products</th>
             <th>Total Amount</th>
             <th>Actions</th>
@@ -104,40 +98,29 @@ const Orders = () => {
         </thead>
         <tbody>
           {filteredOrders.map((order) => {
-            const totalAmount = order.products.reduce((acc, product) => {
-              const productTotalPrice = (product.productId?.price || 0) * product.quantity;
-              return acc + productTotalPrice;
+            const totalAmount = (order.products || []).reduce((acc, product) => {
+              return acc + ((product.productId?.price || 0) * product.quantity);
             }, 0);
 
             return (
               <tr key={order._id}>
                 <td>{order._id}</td>
+                <td>{order.userId?.email || "No Email Provided"}</td>
                 <td>
-                  {order.userId ? (
-                    `${order.userId.username} (${order.userId.email})`
-                  ) : (
-                    <span>User Not Found</span>
-                  )}
-                </td>
-                <td>
-                  <select value={order.orderStatus} onChange={(e) => updateOrderStatus(order._id, e.target.value)}>
+                  <select
+                    value={order.orderStatus || "Pending"}
+                    onChange={(e) => updateOrderStatus(order._id, e.target.value)}
+                  >
                     <option value="Pending">Pending</option>
                     <option value="Shipped">Shipped</option>
                     <option value="Delivered">Delivered</option>
+                    <option value="Processing">Processing</option>
                     <option value="Cancelled">Cancelled</option>
                   </select>
                 </td>
                 <td>
-                  <select value={order.paymentStatus} onChange={(e) => updatePaymentStatus(order._id, e.target.value)}>
-                    <option value="Pending">Pending</option>
-                    <option value="Paid">Paid</option>
-                    <option value="Failed">Failed</option>
-                    <option value="Refunded">Refunded</option>
-                  </select>
-                </td>
-                <td>
                   <ul>
-                    {order.products.map((product) => (
+                    {(order.products || []).map((product) => (
                       <li key={product._id}>
                         {product.productId?.name || "Unknown Product"} - Quantity: {product.quantity}
                       </li>

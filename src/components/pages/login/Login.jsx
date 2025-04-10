@@ -24,7 +24,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        "https://akshaya-admin-be.onrender.com/api/admin/login",
+        "https://adminbackend-dg8o.onrender.com/api/admin/login",
         { email, password },
         { headers: { "Content-Type": "application/json" } }
       );
